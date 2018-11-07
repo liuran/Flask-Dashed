@@ -10,7 +10,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='Flask-Dashed',
-    version='0.1b2',
+    version='0.1b3',
     url='https://github.com/jeanphix/Flask-Dashed',
     license='mit',
     author='Jean-Philippe Serafin',
@@ -24,7 +24,7 @@ setup(
     platforms='any',
     install_requires=[
         'Flask',
-        'WTForms== 1.0.2',
+        'WTForms',
         'Flask-WTF>=0.6',
     ],
     classifiers=[

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from admin import AdminModule
-from views import DashboardView
+from .admin import AdminModule
+from .views import DashboardView
 
 
 class Dashboard(AdminModule):

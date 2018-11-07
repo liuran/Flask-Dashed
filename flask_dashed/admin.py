@@ -2,8 +2,8 @@
 from werkzeug import OrderedMultiDict
 
 from flask import Blueprint, url_for, request, abort
-from views import ObjectListView, ObjectFormView
-from views import ObjectDeleteView, secure
+from .views import ObjectListView, ObjectFormView
+from .views import ObjectDeleteView, secure
 
 
 def recursive_getattr(obj, attr):
@@ -93,7 +93,7 @@ class Admin(object):
             main_dashboard=None, endpoint='admin'):
 
         if not main_dashboard:
-            from dashboard import DefaultDashboard
+            from .dashboard import DefaultDashboard
             main_dashboard = DefaultDashboard
 
         self.blueprint = Blueprint(endpoint, __name__,
@@ -168,7 +168,7 @@ class Admin(object):
 
         :param path: The path to check
         """
-        for key in self.secure_functions.iterkeys():
+        for key in self.secure_functions.keys():
             if path.startswith("%s%s" % (self.url_prefix, key)):
                 for function, http_code in self.secure_functions.getlist(key):
                     if not function():
@@ -226,7 +226,7 @@ class AdminModule(AdminNode):
         """
         try:
             return url_for("%s.%s_%s" % (self.admin.endpoint,
-                self.endpoint, self.rules.lists()[0][0]))
+                self.endpoint, list(self.rules.lists())[0][0]))
                 # Cause OrderedMultiDict.keys() doesn't preserve order...
         except IndexError:
             raise Exception('`AdminModule` must provide at list one rule.')
@@ -289,7 +289,7 @@ class ObjectAdminModule(AdminModule):
         """
         return [
             ('/', 'list', self.list_view.as_view('short_title', self)),
-            ('/page/<page>', 'listpaged', self.list_view.as_view('short_title',
+            ('/page/<page>', 'list', self.list_view.as_view('short_title',
                 self)),
             ('/new', 'new', self.form_view.as_view('short_title', self)),
             ('/<pk>/edit', 'edit', self.form_view.as_view('short_title',

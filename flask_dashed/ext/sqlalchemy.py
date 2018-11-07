@@ -7,7 +7,7 @@ from flask_dashed.admin import ObjectAdminModule
 from flask_dashed.views import ObjectFormView
 from sqlalchemy.sql.expression import or_
 from wtforms.ext.sqlalchemy.orm import model_form as mf
-from flask.ext.wtf import Form
+from flask_wtf import Form
 
 
 def model_form(*args, **kwargs):
